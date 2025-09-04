@@ -6,6 +6,6 @@ class Province extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Text(newProvince));
+    return Center(child: Card(child: Text(newProvince)));
   }
 }
