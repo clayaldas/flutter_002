@@ -2,23 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_002/province.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp(newProvince: 'Azuay'));
 }
 
-class MyApp extends StatelessWidget {
-  final List<String> provinces = [
-    'Napo',
-    'Pichincha',
-    'Cotopaxi',
-    'Guayas',
-    'Imbabura',
-    'Tungurahua',
-  ];
+class MyApp extends StatefulWidget {
+  final String newProvince; //late
+  //late String newProvince = ''; //late
 
-  //const MyApp({super.key});
+  const MyApp({super.key, required this.newProvince});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<String> provinces = [];
+
+  @override
+  void initState() {
+    super.initState();
+    print('Se ejecutó el evento: initState');
+    // inicializar las variables que requieren mantener el estado
+    provinces = [
+      'Napo',
+      'Pichincha',
+      'Cotopaxi',
+      'Guayas',
+      'Imbabura',
+      'Tungurahua',
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('Se ejecutó el evento: build');
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Segunda App',
@@ -26,36 +44,28 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('AppBar del Scaffold')),
 
-        //body: Center(child: Text('Body del Scaffold')),
-        //body: Center(child: Province(newProvince: 'Manabi')),
-        body: ListView.builder(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          /*
-          children: [
-            Province(newProvince: 'Tungurahua'),
-            Province(newProvince: 'Riobamba'),
-            Province(newProvince: 'Manabi'),
-            Province(newProvince: 'Loja'),
-            Province(newProvince: 'Azuay'),
-            Province(newProvince: 'Bolivar'),
-          ],
-          */
-          itemCount: provinces.length,
-          itemBuilder: (context, position) {
-            return Province(newProvince: provinces[position]);
-          },
-          /*
-          children: provinces
-              .map((item) => Province(newProvince: item))
-              .toList(),
-              */
+        body: SizedBox(
+          height: 70,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            //itemCount: provinces.length,
+            itemBuilder: (context, position) {
+              return Province(newProvince: position.toString());
+            },
+            /*
+            children: provinces
+                .map((item) => Province(newProvince: item))
+                .toList(),
+                */
+          ),
         ),
 
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             //print('Presiono el botón');
-            provinces.add('Nueva provincia');
-            print('Cantidad de items: ${provinces.length}');
+            setState(() {}); //build
+            provinces.add(widget.newProvince);
+            //print('Cantidad de items: ${provinces.length}');
           },
           child: Icon(Icons.add),
         ),
@@ -63,15 +73,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Clase (Widget) personalizado
-/*
-class Province extends StatelessWidget {
-  const Province({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(child: Text('Tungurahua'));
-  }
-}
-*/

@@ -6,6 +6,19 @@ class Province extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Card(child: Text(newProvince)));
+    return Center(
+      child: GestureDetector(
+        child: Card(child: Text(newProvince)),
+        onTap: () {
+          print('Hizo un clic en el item: $newProvince');
+        },
+        onDoubleTap: () {
+          print('Hizo un doble clic en el item: $newProvince');
+        },
+        onLongPress: () {
+          print('Hizo un clic sostenido en el item: $newProvince ');
+        },
+      ),
+    );
   }
 }
